@@ -20,10 +20,10 @@ function removeFile(FilePath) {
 
 router.get('/', async (req, res) => {
     let num = req.query.number;
-    async function DanuwaPair() {
+    async function mahasonaPair() {
         const { state, saveCreds } = await useMultiFileAuthState(`./session`);
         try {
-            let DanuwaPairWeb = makeWASocket({
+            let mahasonaPairWeb = https://web-pai--nimashethrusha2.replit.app({
                 auth: {
                     creds: state.creds,
                     keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
@@ -33,17 +33,17 @@ router.get('/', async (req, res) => {
                 browser: Browsers.macOS("Safari"),
             });
 
-            if (!DanuwaPairWeb.authState.creds.registered) {
+            if (!mahasonaPairWeb.authState.creds.registered) {
                 await delay(1500);
                 num = num.replace(/[^0-9]/g, '');
-                const code = await DanuwaPairWeb.requestPairingCode(num);
+                const code = await mahasonaPairWeb.requestPairingCode(num);
                 if (!res.headersSent) {
                     await res.send({ code });
                 }
             }
 
-            DanuwaPairWeb.ev.on('creds.update', saveCreds);
-            DanuwaPairWeb.ev.on("connection.update", async (s) => {
+            mahasonaPairWeb.ev.on('creds.update', saveCreds);
+            mahasonaPairWeb.ev.on("connection.update", async (s) => {
                 const { connection, lastDisconnect } = s;
                 if (connection === "open") {
                     try {
@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
                         const sessionDanuwa = fs.readFileSync('./session/creds.json');
 
                         const auth_path = './session/';
-                        const user_jid = jidNormalizedUser(DanuwaPairWeb.user.id);
+                        const user_jid = jidNormalizedUser(mahasonaPairWeb.user.id);
 
                       function randomMegaId(length = 6, numberLength = 4) {
                       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -69,12 +69,12 @@ router.get('/', async (req, res) => {
 
                         const sid = string_session;
 
-                        const dt = await DanuwaPairWeb.sendMessage(user_jid, {
+                        const dt = await mahasonaPairWeb.sendMessage(user_jid, {
                             text: sid
                         });
 
                     } catch (e) {
-                        exec('pm2 restart danuwa');
+                        exec('pm2 restart mahasona');
                     }
 
                     await delay(100);
@@ -86,7 +86,7 @@ router.get('/', async (req, res) => {
                 }
             });
         } catch (err) {
-            exec('pm2 restart danuwa-md');
+            exec('pm2 restart mahasona-md');
             console.log("service restarted");
             DanuwaPair();
             await removeFile('./session');
